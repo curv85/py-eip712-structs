@@ -2,8 +2,8 @@ import re
 from json import JSONEncoder
 from typing import Union, Type
 
-from eth_utils.crypto import keccak  # type: ignore
-from eth_utils.conversions import to_bytes, to_hex, to_int, HexStr  # type: ignore
+from eth_utils.crypto import keccak
+from eth_utils.conversions import to_bytes, to_hex, to_int, HexStr
 
 
 class EIP712Type:

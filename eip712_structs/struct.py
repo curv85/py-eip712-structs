@@ -7,7 +7,7 @@ from typing import List, Tuple, NamedTuple, Set, Optional
 
 from eth_utils.crypto import keccak  # type: ignore
 
-from .types import Array, String, Uint, Address, Bytes, EIP712Type, from_solidity_type, BytesJSONEncoder
+from eip712_structs.types import Array, String, Uint, Address, Bytes, EIP712Type, from_solidity_type, BytesJSONEncoder
 
 
 class OrderedAttributesMeta(type):

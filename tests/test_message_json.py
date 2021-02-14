@@ -161,8 +161,8 @@ def test_null_field_from_message_error():
         EIP712Struct.from_message(message)
 
 
-def test_extra_field_from_message_error():
-    message = {
+@pytest.mark.parametrize('message', [
+    {
         'primaryType': 'Foo',
         'types': {
             'EIP712Domain': [{
@@ -181,8 +181,9 @@ def test_extra_field_from_message_error():
             's': 'x',
             'undeclared_field': 'y',
         }
-    }
-
+    },
+])
+def test_extra_field_from_message_error(message):
     with pytest.raises(KeyError):
         EIP712Struct.from_message(message)
 
@@ -213,8 +214,8 @@ def test_bytes_json_encoder():
         foo.to_message_json(domain)
 
 
-def test_wrong_domain_type():
-    message = {  # invalid salt
+@pytest.mark.parametrize('message', [
+    {  # invalid salt
         'types': {
             'EIP712Domain': [
                 {'name': 'salt', 'type': 'string'}  # This is the wrong type
@@ -227,6 +228,8 @@ def test_wrong_domain_type():
         'primaryType': 'Foo',
         'domain': {'salt': 'rAnD0mstr1ng'},
         'message': {'s': 'foobar'},
-    }
+    },
+])
+def test_wrong_domain_type(message):
     with pytest.raises(ValueError):
         EIP712Struct.from_message(message)
