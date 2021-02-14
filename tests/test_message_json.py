@@ -112,8 +112,8 @@ def test_nested_struct_to_message():
     assert foo.hash_struct() == new_struct.hash_struct()
 
 
-def test_missing_field_from_message_error():
-    message = {
+@pytest.mark.parametrize('message', [
+    {
         'primaryType': 'Foo',
         'types': {
             'EIP712Domain': [{
@@ -130,14 +130,15 @@ def test_missing_field_from_message_error():
         },
         'message': {
         }
-    }
-
+    },
+])
+def test_missing_field_from_message_error(message):
     with pytest.raises(KeyError):
         EIP712Struct.from_message(message)
 
 
-def test_null_field_from_message_error():
-    message = {
+@pytest.mark.parametrize('message', [
+    {
         'primaryType': 'Foo',
         'types': {
             'EIP712Domain': [{
@@ -155,8 +156,9 @@ def test_null_field_from_message_error():
         'message': {
             's': None,
         }
-    }
-
+    },
+])
+def test_null_field_from_message_error(message):
     with pytest.raises(ValueError):
         EIP712Struct.from_message(message)
 
