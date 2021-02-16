@@ -70,8 +70,8 @@ def test_encode_bytes():
     class TestStruct(EIP712Struct):
         b = Bytes(4)
 
-    s1 = TestStruct(b='0xffee')
-    s2 = TestStruct(b=b'\xff\xee')
+    s1 = TestStruct(b='0xffeeddcc')
+    s2 = TestStruct(b=b'\xff\xee\xdd\xcc')
     assert s1.encode_value() == s2.encode_value()
     with pytest.raises(ValueError):
         TestStruct(b='0xffffffffff')  # too long

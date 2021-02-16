@@ -132,7 +132,7 @@ class Bytes(EIP712Type):
         if self.length == 0:
             return keccak(value)
         else:
-            if len(value) > self.length:
+            if len(value) != self.length:
                 raise ValueError(f'{self.type_name} was given bytes with length {len(value)}')
             padding = bytes(32 - len(value))
             return value + padding
