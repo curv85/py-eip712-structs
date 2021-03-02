@@ -190,6 +190,32 @@ def test_extra_field_from_message_error(message):
         EIP712Struct.from_message(message)
 
 
+@pytest.mark.parametrize('message', [
+    {
+        'primaryType': 'Foo',
+        'types': {
+            'EIP712Domain': [{
+                'name': 'name',
+                'type': 'string',
+            }],
+            'Foo': [{
+                'name': 's',
+                'type': 'bytes4',
+            }]
+        },
+        'domain': {
+            'name': 'domain',
+        },
+        'message': {
+            's': '0xff',  # shorter than 4 bytes
+        }
+    },
+])
+def test_bytes_too_short_from_message_error(message):
+    with pytest.raises(ValueError):
+        EIP712Struct.from_message(message)
+
+
 def test_bytes_json_encoder():
     class Foo(EIP712Struct):
         b = Bytes(32)
