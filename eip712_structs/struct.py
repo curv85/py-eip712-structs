@@ -278,6 +278,12 @@ class EIP712Struct(EIP712Type, metaclass=OrderedAttributesMeta):
             # We expect an EIP712Struct instance. Assert that's true, and check the struct signature too.
             if not isinstance(value, EIP712Struct) or value._encode_type(False) != typ._encode_type(False):
                 raise ValueError(f'Given value is of type {type(value)}, but we expected {typ}')
+        elif isinstance(typ, Array) and isinstance(value, list):
+            for val in value:
+                try:
+                    typ.member_type(**val)
+                except KeyError as e:
+                    raise ValueError(f'{val} is invalid for child type {typ.member_type.type_name}') from e
         else:
             # Since it isn't a nested struct, its an EIP712Type
             try:
